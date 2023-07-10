@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';// can i use both
 import {
   Container,
   Card,
@@ -7,11 +7,11 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { getMe, deleteBook } from '../utils/API';
+// import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 import { QUERY_GET_ME } from '../utils/queries';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { REMOVE_BOOK } from '../utils/mutations';
 
 
@@ -68,7 +68,7 @@ const SavedBooks = () => {
         throw new Error('Something went wrong!');
       }
 
-      setUserData(updatedUser);  //// problem with 2 const
+      // setUserData(updatedUser);  //// problem with 2 const
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
