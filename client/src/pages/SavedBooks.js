@@ -16,11 +16,11 @@ import { REMOVE_BOOK } from '../utils/mutations';
 
 
 const SavedBooks = () => {
+  const { loading, data } = useQuery(QUERY_GET_ME);
   // const [userData, setUserData] = useState({});
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
   // use this to determine if `useEffect()` hook needs to run again
   // const userDataLength = Object.keys(userData).length;
-  const { loading, data } = useQuery(QUERY_GET_ME);
   const userData = data?.me || {};
 
 
@@ -63,10 +63,10 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      const updatedUser = data?.removeBook;
-      if (!updatedUser) {
-        throw new Error('Something went wrong!');
-      }
+      // const updatedUser = data?.removeBook;
+      // if (!updatedUser) {
+      //   throw new Error('Something went wrong!');
+      // }
 
       // setUserData(updatedUser);  //// problem with 2 const
       removeBookId(bookId);
