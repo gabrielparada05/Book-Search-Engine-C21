@@ -5,6 +5,7 @@ import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { useQuery, useMutation } from '@apollo/client';
 import { SAVE_BOOK } from '../utils/mutations';
+import SavedBooks from './SavedBooks';
 
 
 const SearchBooks = () => {
@@ -57,7 +58,7 @@ const SearchBooks = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
+  const handleSaveBook =  (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
@@ -70,7 +71,7 @@ const SearchBooks = () => {
     }
 
     try {
-      const { data } = await saveBook({
+      const { data } =  saveBook({
         variables: {
           bookAuthor: bookToSave.authors,
           title: bookToSave.title,
@@ -100,6 +101,8 @@ const SearchBooks = () => {
     //   console.error(err);
     // }
   };
+
+
 
   return (
     <>
