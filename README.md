@@ -20,7 +20,6 @@ The app is a Google Books API search engine that allows users to search for book
   - [License](#license)
   - [How to Contribute](#how-to-contribute)
   - [Questions](#questions)
-  - [Credits](#credits)
 
 ## Installation 
 To get started with this app, users can follow these steps:
@@ -78,11 +77,9 @@ Third-Party API,Node.js Module, MongoDB, Apollo Server.
 
 
 ## How to Contribute  
-Users can collaborate with this project at https://github.com/gabrielparada05/React-Portfolio.
+Users can collaborate with this project at https://github.com/gabrielparada05/Book-Search-Engine-C21
 
 ## Questions 
  Email: [gabrielparada05@gmail.com](mailto:gabrielparada05@gmail.com). Or, through my GitHub profile gabrielparada05, available at https://github.com/gabrielparada05.
 
 
-## Credits
-aaaaaaaaaaaaaaaaaaa
