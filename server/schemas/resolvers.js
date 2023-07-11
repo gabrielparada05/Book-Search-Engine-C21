@@ -8,8 +8,8 @@ const resolvers = {
     users: async () => {
       return User.find();
     },
-    user: async (parent, { id }) => {
-      return User.findOne({ id });
+    user: async (parent, { username }) => {
+      return User.findOne({ username });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -70,23 +70,18 @@ const resolvers = {
         throw new Error('Failed to save book.');
       }
     },
-
+    
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        const book = await Book.findOneAndDelete({
-          id: bookId,
-          user: context.user.username,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { books: book } }
-        );
-
-        return User
+          const updatedUser = await User.findByIdAndUpdate(
+              { _id: context.user._id },
+              { $pull: { savedBooks: { bookId : bookId}} },
+              { new: true }
+          )
+          return updatedUser;
       }
-      throw new AuthenticationError('You need to be logged in!');
-    }
+      throw new AuthenticationError ('You need to be log in first.');
+  }
   } }
 
   module.exports = resolvers;
