@@ -70,18 +70,22 @@ const SearchBooks = () => {
     }
 
     try {
-      const {data} = await saveBook({
-        variables: { bookData:{...bookToSave} },
+      const { data } = await saveBook({
+        variables: {
+          bookAuthor: bookToSave.authors,
+          title: bookToSave.title,
+          description: bookToSave.description,
+          bookId: bookToSave.bookId,
+          image: bookToSave.image,
+          link: bookToSave.link,
+        },
       });
 
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error(err);
     }
-
-    if (!token) {
-      return false;
-    }
+    
 
     // try {
     //   const response = await saveBook(bookToSave, token);
@@ -161,10 +165,7 @@ const SearchBooks = () => {
                           : 'Save this Book!'}
                       </Button>
 
-                      // {error && (
-                      //   <div className="col-12 my-3 bg-danger text-white p-3">
-                      //     {error.message}
-                      //   </div>
+                     
                     )}
                   </Card.Body>
                 </Card>

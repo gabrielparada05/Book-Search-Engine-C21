@@ -1,6 +1,7 @@
 const { User, Book } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
+const { findById } = require('../models/User');
 
 const resolvers = {
   Query: {
@@ -38,38 +39,43 @@ const resolvers = {
       }
 
       const token = signToken(user);
-
       return { token, user };
     },
 
-    saveBook: async (parent, { bookAuthor, title, bookId, image, link }, context) => {
+    saveBook: async (parent, {bookAuthor, description, title, bookId, image, link}, context) => {
       if (!context.user) {
-        throw new Error('Authentication required');
+        throw new Error('User not authenticated.');
       }
-
-      const newBook = new Book({
-        bookAuthor,
-        title,
-        bookId,
-        image,
-        link,
-        userId: context.user.id,
-      });
-
+    
       try {
-
-        const savedBook = await newBook.save();
-        return savedBook;
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id,
+          {
+            $push: {
+              savedBooks: {
+                bookAuthor,
+                description,
+                title,
+                bookId,
+                image,
+                link,
+              },
+            },
+          },
+          { new: true }
+        );
+    
+        return updatedUser;
       } catch (error) {
-        throw new Error('Failed to save book');
+        throw new Error('Failed to save book.');
       }
     },
 
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
         const book = await Book.findOneAndDelete({
-          id: bookId
-          // user: context.user.username,
+          id: bookId,
+          user: context.user.username,
         });
 
         await User.findOneAndUpdate(
